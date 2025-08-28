@@ -1,0 +1,6 @@
+psutil
+WMI
+requests
+pywin32
+pyinstaller
+cx-Freeze

@@ -1,0 +1,611 @@
+{
+  "collection_date": "2025-08-28T08:08:08.439339",
+  "system_info": {
+    "hostname": "DESKTOP-R555R9M",
+    "current_user": "ASUS",
+    "os_name": "Windows",
+    "os_version": "10.0.26100",
+    "os_release": "11",
+    "architecture": "AMD64",
+    "processor": "Intel64 Family 6 Model 158 Stepping 10, GenuineIntel",
+    "manufacturer": "ASUSTeK COMPUTER INC.",
+    "model": "TUF GAMING FX504GE_FX80GE",
+    "system_type": "x64-based PC",
+    "serial_number": "J7NRCX00A42427A"
+  },
+  "hardware_info": {
+    "cpu": {
+      "name": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+      "manufacturer": "GenuineIntel",
+      "architecture": 9,
+      "cores": 4,
+      "threads": 8,
+      "max_clock_speed": 2301,
+      "current_clock_speed": 2301.0
+    },
+    "memory": {
+      "total_capacity": 17179869184,
+      "total_capacity_gb": 16.0,
+      "modules": [
+        {
+          "capacity": 8589934592,
+          "speed": 2667,
+          "manufacturer": "SK Hynix",
+          "part_number": "HMA81GS6CJR8N-VK    "
+        },
+        {
+          "capacity": 8589934592,
+          "speed": 2400,
+          "manufacturer": "Micron",
+          "part_number": "8ATF1G64AZ-2G6H1    "
+        }
+      ],
+      "available_memory": 9353809920,
+      "used_memory": 7675256832,
+      "memory_percent": 45.1
+    },
+    "disks": [
+      {
+        "model": "HGST HTS545050A7E680",
+        "manufacturer": "(Lecteurs de disque standard)",
+        "size": 500105249280,
+        "size_gb": 465.76,
+        "interface_type": "IDE",
+        "serial_number": "      TMA55CPY06G16L",
+        "partitions": [
+          {
+            "name": "Disque n° 0, partition n° 0",
+            "size": 500104691712,
+            "size_gb": 465.76,
+            "type": "Installable File System"
+          }
+        ]
+      },
+      {
+        "model": "UMIS RPITJ512PED2OWX",
+        "manufacturer": "(Lecteurs de disque standard)",
+        "size": 512105932800,
+        "size_gb": 476.94,
+        "interface_type": "SCSI",
+        "serial_number": "044A_50FF_F868_0000.",
+        "partitions": [
+          {
+            "name": "Disque n° 1, partition n° 0",
+            "size": 104857600,
+            "size_gb": 0.1,
+            "type": "GPT: System"
+          },
+          {
+            "name": "Disque n° 1, partition n° 1",
+            "size": 208528211968,
+            "size_gb": 194.21,
+            "type": "GPT: Basic Data"
+          },
+          {
+            "name": "Disque n° 1, partition n° 2",
+            "size": 587202560,
+            "size_gb": 0.55,
+            "type": "GPT: Unknown"
+          },
+          {
+            "name": "Disque n° 1, partition n° 3",
+            "size": 302753251328,
+            "size_gb": 281.96,
+            "type": "GPT: Basic Data"
+          }
+        ]
+      }
+    ],
+    "graphics": [
+      {
+        "name": "Intel(R) UHD Graphics 630",
+        "manufacturer": "Intel Corporation",
+        "memory": 1073741824,
+        "memory_gb": 1.0,
+        "driver_version": "31.0.101.2111",
+        "resolution": "1920x1080"
+      },
+      {
+        "name": "NVIDIA GeForce GTX 1050 Ti",
+        "manufacturer": "NVIDIA",
+        "memory": -1048576,
+        "memory_gb": -0.0,
+        "driver_version": "27.21.14.6151",
+        "resolution": "0x0"
+      }
+    ],
+    "monitors": [
+      {
+        "name": "Écran par défaut",
+        "manufacturer": "Unknown",
+        "model": "Écran par défaut",
+        "resolution": "1920x1080",
+        "screen_width": 1920,
+        "screen_height": 1080
+      }
+    ]
+  },
+  "network_info": {
+    "interfaces": [
+      {
+        "name": "Realtek 8821CE Wireless LAN 802.11ac PCI-E NIC",
+        "adapter_type": "Ethernet 802.3",
+        "mac_address": "D0:C5:D3:41:08:AD",
+        "manufacturer": "Realtek Semiconductor Corp.",
+        "description": "Realtek 8821CE Wireless LAN 802.11ac PCI-E NIC",
+        "speed": "120000000",
+        "status": "Enabled"
+      }
+    ],
+    "ip_configuration": [
+      {
+        "interface": "Ethernet 2",
+        "ip_address": "169.254.83.64",
+        "netmask": "255.255.0.0",
+        "broadcast": null
+      },
+      {
+        "interface": "Connexion au réseau local* 13",
+        "ip_address": "169.254.139.142",
+        "netmask": "255.255.0.0",
+        "broadcast": null
+      },
+      {
+        "interface": "Connexion au réseau local* 14",
+        "ip_address": "169.254.230.184",
+        "netmask": "255.255.0.0",
+        "broadcast": null
+      },
+      {
+        "interface": "Wi-Fi 3",
+        "ip_address": "192.168.0.106",
+        "netmask": "255.255.255.0",
+        "broadcast": null
+      },
+      {
+        "interface": "Connexion réseau Bluetooth 2",
+        "ip_address": "169.254.144.248",
+        "netmask": "255.255.0.0",
+        "broadcast": null
+      },
+      {
+        "interface": "Loopback Pseudo-Interface 1",
+        "ip_address": "127.0.0.1",
+        "netmask": "255.0.0.0",
+        "broadcast": null
+      }
+    ],
+    "wifi_networks": [],
+    "current_wifi": {},
+    "dns_servers": [],
+    "gateway": "192.168.0.106"
+  },
+  "software_info": {
+    "installed_software": [
+      {
+        "name": "Conexant HD Audio",
+        "version": "8.66.95.69",
+        "publisher": "Conexant",
+        "install_location": "Unknown",
+        "install_date": "Unknown",
+        "uninstall_string": "C:\\Program Files\\CONEXANT\\CNXT_AUDIO_HDA\\UIU64a.exe -U -G -IX40Plmwa.inf",
+        "detection_date": "2025-08-28T08:08:11.202721",
+        "source": "registry"
+      },
+      {
+        "name": "CrystalDiskInfo 9.7.1 Shizuku Edition",
+        "version": "9.7.1",
+        "publisher": "Crystal Dew World",
+        "install_location": "C:\\Program Files\\CrystalDiskInfo\\",
+        "install_date": "20250827",
+        "uninstall_string": "\"C:\\Program Files\\CrystalDiskInfo\\unins000.exe\"",
+        "detection_date": "2025-08-28T08:08:11.202818",
+        "source": "registry"
+      },
+      {
+        "name": "Git",
+        "version": "2.51.0",
+        "publisher": "The Git Development Community",
+        "install_location": "C:\\Program Files\\Git\\",
+        "install_date": "20250827",
+        "uninstall_string": "\"C:\\Program Files\\Git\\unins000.exe\"",
+        "detection_date": "2025-08-28T08:08:11.202959",
+        "source": "registry"
+      },
+      {
+        "name": "Microsoft Project Professionnel 2016 - fr-fr",
+        "version": "16.0.14334.20244",
+        "publisher": "Microsoft Corporation",
+        "install_location": "C:\\Program Files\\Microsoft Office",
+        "install_date": "Unknown",
+        "uninstall_string": "\"C:\\Program Files\\Common Files\\Microsoft Shared\\ClickToRun\\OfficeClickToRun.exe\" scenario=install scenariosubtype=ARP sourcetype=None productstoremove=ProjectProVolume.16_fr-fr_x-none culture=fr-fr version.16=16.0",
+        "detection_date": "2025-08-28T08:08:11.203194",
+        "source": "registry"
+      },
+      {
+        "name": "Microsoft Office Professionnel Plus 2016 - fr-fr",
+        "version": "16.0.14334.20244",
+        "publisher": "Microsoft Corporation",
+        "install_location": "C:\\Program Files\\Microsoft Office",
+        "install_date": "Unknown",
+        "uninstall_string": "\"C:\\Program Files\\Common Files\\Microsoft Shared\\ClickToRun\\OfficeClickToRun.exe\" scenario=install scenariosubtype=ARP sourcetype=None productstoremove=ProPlusVolume.16_fr-fr_x-none culture=fr-fr version.16=16.0",
+        "detection_date": "2025-08-28T08:08:11.203259",
+        "source": "registry"
+      },
+      {
+        "name": "Microsoft Visio Professionnel 2016 - fr-fr",
+        "version": "16.0.14334.20244",
+        "publisher": "Microsoft Corporation",
+        "install_location": "C:\\Program Files\\Microsoft Office",
+        "install_date": "Unknown",
+        "uninstall_string": "\"C:\\Program Files\\Common Files\\Microsoft Shared\\ClickToRun\\OfficeClickToRun.exe\" scenario=install scenariosubtype=ARP sourcetype=None productstoremove=VisioProVolume.16_fr-fr_x-none culture=fr-fr version.16=16.0",
+        "detection_date": "2025-08-28T08:08:11.203348",
+        "source": "registry"
+      },
+      {
+        "name": "VLC media player",
+        "version": "3.0.10",
+        "publisher": "VideoLAN",
+        "install_location": "C:\\Program Files\\VideoLAN\\VLC",
+        "install_date": "Unknown",
+        "uninstall_string": "\"C:\\Program Files\\VideoLAN\\VLC\\uninstall.exe\"",
+        "detection_date": "2025-08-28T08:08:11.203424",
+        "source": "registry"
+      },
+      {
+        "name": "WinRAR 6.00 beta 1 (64-bit)",
+        "version": "6.00.1",
+        "publisher": "win.rar GmbH",
+        "install_location": "C:\\Program Files\\WinRAR\\",
+        "install_date": "Unknown",
+        "uninstall_string": "C:\\Program Files\\WinRAR\\uninstall.exe",
+        "detection_date": "2025-08-28T08:08:11.203509",
+        "source": "registry"
+      },
+      {
+        "name": "Python 3.13.7 Add to Path (64-bit)",
+        "version": "3.13.7150.0",
+        "publisher": "Python Software Foundation",
+        "install_location": "",
+        "install_date": "20250827",
+        "uninstall_string": "MsiExec.exe /I{235C9435-3313-4658-881D-5A7E559A5A41}",
+        "detection_date": "2025-08-28T08:08:11.203573",
+        "source": "registry"
+      },
+      {
+        "name": "Python 3.13.7 Test Suite (64-bit)",
+        "version": "3.13.7150.0",
+        "publisher": "Python Software Foundation",
+        "install_location": "",
+        "install_date": "20250827",
+        "uninstall_string": "MsiExec.exe /I{6BD2B618-9A2B-47D9-B24B-2F05BD2768E4}",
+        "detection_date": "2025-08-28T08:08:11.203648",
+        "source": "registry"
+      },
+      {
+        "name": "Office 16 Click-to-Run Licensing Component",
+        "version": "16.0.14334.20244",
+        "publisher": "Microsoft Corporation",
+        "install_location": "",
+        "install_date": "20250827",
+        "uninstall_string": "MsiExec.exe /I{90160000-007E-0000-1000-0000000FF1CE}",
+        "detection_date": "2025-08-28T08:08:11.203711",
+        "source": "registry"
+      },
+      {
+        "name": "Office 16 Click-to-Run Extensibility Component",
+        "version": "16.0.14334.20244",
+        "publisher": "Microsoft Corporation",
+        "install_location": "",
+        "install_date": "20250827",
+        "uninstall_string": "MsiExec.exe /X{90160000-008C-0000-1000-0000000FF1CE}",
+        "detection_date": "2025-08-28T08:08:11.203772",
+        "source": "registry"
+      },
+      {
+        "name": "Office 16 Click-to-Run Localization Component",
+        "version": "16.0.14334.20090",
+        "publisher": "Microsoft Corporation",
+        "install_location": "",
+        "install_date": "20250827",
+        "uninstall_string": "MsiExec.exe /X{90160000-008C-040C-1000-0000000FF1CE}",
+        "detection_date": "2025-08-28T08:08:11.203832",
+        "source": "registry"
+      },
+      {
+        "name": "Python 3.13.7 Development Libraries (64-bit)",
+        "version": "3.13.7150.0",
+        "publisher": "Python Software Foundation",
+        "install_location": "",
+        "install_date": "20250827",
+        "uninstall_string": "MsiExec.exe /I{96A23710-E014-4A5B-96A1-DE64AC37251B}",
+        "detection_date": "2025-08-28T08:08:11.203894",
+        "source": "registry"
+      },
+      {
+        "name": "Python 3.13.7 Standard Library (64-bit)",
+        "version": "3.13.7150.0",
+        "publisher": "Python Software Foundation",
+        "install_location": "",
+        "install_date": "20250827",
+        "uninstall_string": "MsiExec.exe /I{A139F43E-8105-465D-AC80-28F349CBE08D}",
+        "detection_date": "2025-08-28T08:08:11.203957",
+        "source": "registry"
+      },
+      {
+        "name": "Python 3.13.7 Tcl/Tk Support (64-bit)",
+        "version": "3.13.7150.0",
+        "publisher": "Python Software Foundation",
+        "install_location": "",
+        "install_date": "20250827",
+        "uninstall_string": "MsiExec.exe /I{A65B1339-6492-4CA4-AEB5-2B25A83A20B9}",
+        "detection_date": "2025-08-28T08:08:11.204019",
+        "source": "registry"
+      },
+      {
+        "name": "Panneau de configuration NVIDIA 461.51",
+        "version": "461.51",
+        "publisher": "NVIDIA Corporation",
+        "install_location": "C:\\Program Files\\NVIDIA Corporation\\Control Panel Client",
+        "install_date": "20250531",
+        "uninstall_string": "Unknown",
+        "detection_date": "2025-08-28T08:08:11.204085",
+        "source": "registry"
+      },
+      {
+        "name": "NVIDIA Pilote graphique 461.51",
+        "version": "461.51",
+        "publisher": "NVIDIA Corporation",
+        "install_location": "C:\\Program Files\\NVIDIA Corporation\\Installer2\\Display.Driver.{9B061931-5CFA-4CF6-BA34-28BA27D41D89}",
+        "install_date": "20250531",
+        "uninstall_string": "\"C:\\Windows\\SysWOW64\\RunDll32.EXE\" \"C:\\Program Files\\NVIDIA Corporation\\Installer2\\InstallerCore\\NVI2.DLL\",UninstallPackage Display.Driver",
+        "detection_date": "2025-08-28T08:08:11.204158",
+        "source": "registry"
+      },
+      {
+        "name": "NVIDIA Logiciel système PhysX 9.19.0218",
+        "version": "9.19.0218",
+        "publisher": "NVIDIA Corporation",
+        "install_location": "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX",
+        "install_date": "20250310",
+        "uninstall_string": "\"C:\\WINDOWS\\SysWOW64\\RunDll32.EXE\" \"C:\\Program Files\\NVIDIA Corporation\\Installer2\\InstallerCore\\NVI2.DLL\",UninstallPackage Display.PhysX",
+        "detection_date": "2025-08-28T08:08:11.204225",
+        "source": "registry"
+      },
+      {
+        "name": "NVIDIA Install Application",
+        "version": "2.1002.346.0",
+        "publisher": "NVIDIA Corporation",
+        "install_location": "C:\\Program Files\\NVIDIA Corporation\\Installer2\\InstallerCore",
+        "install_date": "20250531",
+        "uninstall_string": "Unknown",
+        "detection_date": "2025-08-28T08:08:11.204289",
+        "source": "registry"
+      },
+      {
+        "name": "NVIDIA Display MessageBus",
+        "version": "461.51",
+        "publisher": "NVIDIA Corporation",
+        "install_location": "C:\\Program Files\\NVIDIA Corporation\\Installer2\\NvDisplay.MessageBus.{07736CC7-E788-40E2-BCC0-00117C7237AB}",
+        "install_date": "20250531",
+        "uninstall_string": "Unknown",
+        "detection_date": "2025-08-28T08:08:11.204357",
+        "source": "registry"
+      },
+      {
+        "name": "NVIDIA Display Container",
+        "version": "1.28",
+        "publisher": "NVIDIA Corporation",
+        "install_location": "C:\\Program Files\\NVIDIA Corporation\\Display.NvContainer",
+        "install_date": "20250531",
+        "uninstall_string": "Unknown",
+        "detection_date": "2025-08-28T08:08:11.204422",
+        "source": "registry"
+      },
+      {
+        "name": "NVIDIA Display Container LS",
+        "version": "1.28",
+        "publisher": "NVIDIA Corporation",
+        "install_location": "C:\\Program Files\\NVIDIA Corporation\\Installer2\\NVDisplayContainerLS.{A87974E7-F68D-45DE-BFAC-A45F6448F22B}",
+        "install_date": "20250531",
+        "uninstall_string": "Unknown",
+        "detection_date": "2025-08-28T08:08:11.204490",
+        "source": "registry"
+      },
+      {
+        "name": "NVIDIA Display Watchdog Plugin",
+        "version": "1.28",
+        "publisher": "NVIDIA Corporation",
+        "install_location": "C:\\Program Files\\NVIDIA Corporation\\Installer2\\NVDisplayPluginWatchdog.{6FD86938-5BBE-422B-8284-995D3E950E1B}",
+        "install_date": "20250531",
+        "uninstall_string": "Unknown",
+        "detection_date": "2025-08-28T08:08:11.204559",
+        "source": "registry"
+      },
+      {
+        "name": "NVIDIA Display Session Container",
+        "version": "1.28",
+        "publisher": "NVIDIA Corporation",
+        "install_location": "C:\\Program Files\\NVIDIA Corporation\\Installer2\\NVDisplaySessionContainer.{CC18BC0D-227B-46C9-A4EF-E8185894CC44}",
+        "install_date": "20250531",
+        "uninstall_string": "Unknown",
+        "detection_date": "2025-08-28T08:08:11.204641",
+        "source": "registry"
+      },
+      {
+        "name": "Python 3.13.7 Core Interpreter (64-bit)",
+        "version": "3.13.7150.0",
+        "publisher": "Python Software Foundation",
+        "install_location": "",
+        "install_date": "20250827",
+        "uninstall_string": "MsiExec.exe /I{BE75E968-78F4-411D-92E4-73EC3043F7E4}",
+        "detection_date": "2025-08-28T08:08:11.204708",
+        "source": "registry"
+      },
+      {
+        "name": "Python 3.13.7 pip Bootstrap (64-bit)",
+        "version": "3.13.7150.0",
+        "publisher": "Python Software Foundation",
+        "install_location": "",
+        "install_date": "20250827",
+        "uninstall_string": "MsiExec.exe /I{CD31E178-F872-466B-A231-9C8AA53A89FD}",
+        "detection_date": "2025-08-28T08:08:11.204777",
+        "source": "registry"
+      },
+      {
+        "name": "Python 3.13.7 Documentation (64-bit)",
+        "version": "3.13.7150.0",
+        "publisher": "Python Software Foundation",
+        "install_location": "",
+        "install_date": "20250827",
+        "uninstall_string": "MsiExec.exe /I{CFAAA24B-16EF-4D9D-80A5-F67798771571}",
+        "detection_date": "2025-08-28T08:08:11.204844",
+        "source": "registry"
+      },
+      {
+        "name": "Python 3.13.7 Executables (64-bit)",
+        "version": "3.13.7150.0",
+        "publisher": "Python Software Foundation",
+        "install_location": "",
+        "install_date": "20250827",
+        "uninstall_string": "MsiExec.exe /I{E4047598-558F-4468-8B53-9FCEF7F86E0D}",
+        "detection_date": "2025-08-28T08:08:11.204918",
+        "source": "registry"
+      },
+      {
+        "name": "Everything 1.4.1.895 (x86)",
+        "version": "1.4.1.895",
+        "publisher": "David Carpenter",
+        "install_location": "Unknown",
+        "install_date": "Unknown",
+        "uninstall_string": "C:\\Program Files (x86)\\Everything\\Uninstall.exe",
+        "detection_date": "2025-08-28T08:08:11.205188",
+        "source": "registry"
+      },
+      {
+        "name": "Google Chrome",
+        "version": "139.0.7258.140",
+        "publisher": "Google LLC",
+        "install_location": "C:\\Program Files\\Google\\Chrome\\Application",
+        "install_date": "20250827",
+        "uninstall_string": "\"C:\\Program Files\\Google\\Chrome\\Application\\139.0.7258.140\\Installer\\setup.exe\" --uninstall --channel=stable --system-level --verbose-logging",
+        "detection_date": "2025-08-28T08:08:11.205284",
+        "source": "registry"
+      },
+      {
+        "name": "Internet Download Manager",
+        "version": "6.42.26",
+        "publisher": "Tonec Inc.",
+        "install_location": "Unknown",
+        "install_date": "Unknown",
+        "uninstall_string": "C:\\Program Files (x86)\\Internet Download Manager\\Uninstall.exe",
+        "detection_date": "2025-08-28T08:08:11.205453",
+        "source": "registry"
+      },
+      {
+        "name": "Microsoft Edge",
+        "version": "139.0.3405.119",
+        "publisher": "Microsoft Corporation",
+        "install_location": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application",
+        "install_date": "20250828",
+        "uninstall_string": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\139.0.3405.119\\Installer\\setup.exe\" --uninstall --msedge --channel=stable --system-level --verbose-logging",
+        "detection_date": "2025-08-28T08:08:11.205522",
+        "source": "registry"
+      },
+      {
+        "name": "Microsoft Edge WebView2 Runtime",
+        "version": "139.0.3405.119",
+        "publisher": "Microsoft Corporation",
+        "install_location": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application",
+        "install_date": "20250828",
+        "uninstall_string": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\139.0.3405.119\\Installer\\setup.exe\" --uninstall --msedgewebview --system-level --verbose-logging",
+        "detection_date": "2025-08-28T08:08:11.205618",
+        "source": "registry"
+      },
+      {
+        "name": "Python Launcher",
+        "version": "3.13.7150.0",
+        "publisher": "Python Software Foundation",
+        "install_location": "",
+        "install_date": "20250827",
+        "uninstall_string": "MsiExec.exe /X{8B8DEA15-D815-4CB1-AC10-4E7713F3DFA0}",
+        "detection_date": "2025-08-28T08:08:11.205785",
+        "source": "registry"
+      },
+      {
+        "name": "Realtek High Definition Audio Driver",
+        "version": "6.0.1.8656",
+        "publisher": "Realtek Semiconductor Corp.",
+        "install_location": "C:\\Program Files\\Realtek\\Audio\\HDA",
+        "install_date": "Unknown",
+        "uninstall_string": "\"C:\\Program Files\\Realtek\\Audio\\HDA\\RtlUpd64.exe\" -r -m -nrg2709",
+        "detection_date": "2025-08-28T08:08:11.205853",
+        "source": "registry"
+      },
+      {
+        "name": "GitHub Desktop",
+        "version": "3.5.2",
+        "publisher": "GitHub, Inc.",
+        "install_location": "C:\\Users\\ASUS\\AppData\\Local\\GitHubDesktop",
+        "install_date": "20250827",
+        "uninstall_string": "\"C:\\Users\\ASUS\\AppData\\Local\\GitHubDesktop\\Update.exe\" --uninstall",
+        "detection_date": "2025-08-28T08:08:11.205942",
+        "source": "registry"
+      },
+      {
+        "name": "Microsoft OneDrive",
+        "version": "25.140.0720.0001",
+        "publisher": "Microsoft Corporation",
+        "install_location": "Unknown",
+        "install_date": "Unknown",
+        "uninstall_string": "\"C:\\Users\\ASUS\\AppData\\Local\\Microsoft\\OneDrive\\25.140.0720.0001\\OneDriveSetup.exe\"  /uninstall ",
+        "detection_date": "2025-08-28T08:08:11.206015",
+        "source": "registry"
+      },
+      {
+        "name": "Microsoft Visual Studio Code (User)",
+        "version": "1.103.2",
+        "publisher": "Microsoft Corporation",
+        "install_location": "C:\\Users\\ASUS\\AppData\\Local\\Programs\\Microsoft VS Code\\",
+        "install_date": "20250827",
+        "uninstall_string": "\"C:\\Users\\ASUS\\AppData\\Local\\Programs\\Microsoft VS Code\\unins000.exe\"",
+        "detection_date": "2025-08-28T08:08:11.206087",
+        "source": "registry"
+      },
+      {
+        "name": "Python 3.13.7 (64-bit)",
+        "version": "3.13.7150.0",
+        "publisher": "Python Software Foundation",
+        "install_location": "Unknown",
+        "install_date": "Unknown",
+        "uninstall_string": "\"C:\\Users\\ASUS\\AppData\\Local\\Package Cache\\{9a46f6d0-8f11-4f8f-a23d-d617db01bbb6}\\python-3.13.7-amd64.exe\"  /uninstall",
+        "detection_date": "2025-08-28T08:08:11.206166",
+        "source": "registry"
+      },
+      {
+        "name": "Cursor (User)",
+        "version": "1.5.5",
+        "publisher": "Anysphere",
+        "install_location": "C:\\Users\\ASUS\\AppData\\Local\\Programs\\cursor\\",
+        "install_date": "20250827",
+        "uninstall_string": "\"C:\\Users\\ASUS\\AppData\\Local\\Programs\\cursor\\unins000.exe\"",
+        "detection_date": "2025-08-28T08:08:11.206233",
+        "source": "registry"
+      },
+      {
+        "name": "Unknown",
+        "version": "Unknown",
+        "publisher": "Unknown",
+        "install_location": "Unknown",
+        "install_date": "Unknown",
+        "uninstall_string": "Unknown",
+        "detection_date": "2025-08-28T08:08:12.487231",
+        "source": "wmi"
+      }
+    ],
+    "running_processes": [],
+    "windows_updates": [],
+    "total_software_count": 42,
+    "scan_date": "2025-08-28T08:08:18.391616"
+  }
+}

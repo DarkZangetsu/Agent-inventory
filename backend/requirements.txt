@@ -1,0 +1,7 @@
+Django
+djangorestframework
+django-cors-headers
+graphene-django
+django-filter
+psycopg2-binary
+python-decouple

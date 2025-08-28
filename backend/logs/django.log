@@ -1,0 +1,59 @@
+INFO 2025-08-28 08:01:43,092 autoreload 6148 12608 Watching for file changes with StatReloader
+INFO 2025-08-28 08:02:41,298 autoreload 6148 12608 C:\Users\ASUS\Documents\agent\backend\inventory\views.py changed, reloading.
+INFO 2025-08-28 08:02:42,718 autoreload 3100 14028 Watching for file changes with StatReloader
+INFO 2025-08-28 08:04:18,525 autoreload 3100 14028 C:\Users\ASUS\Documents\agent\backend\inventory\models.py changed, reloading.
+INFO 2025-08-28 08:04:19,336 autoreload 1792 2532 Watching for file changes with StatReloader
+INFO 2025-08-28 08:04:30,358 autoreload 1792 2532 C:\Users\ASUS\Documents\agent\backend\inventory\models.py changed, reloading.
+INFO 2025-08-28 08:04:31,233 autoreload 14260 4660 Watching for file changes with StatReloader
+INFO 2025-08-28 08:04:41,376 autoreload 14260 4660 C:\Users\ASUS\Documents\agent\backend\inventory\models.py changed, reloading.
+INFO 2025-08-28 08:04:42,247 autoreload 11700 13584 Watching for file changes with StatReloader
+INFO 2025-08-28 08:06:02,912 autoreload 11700 13584 C:\Users\ASUS\Documents\agent\backend\inventory\schema.py changed, reloading.
+INFO 2025-08-28 08:06:03,986 autoreload 16356 16116 Watching for file changes with StatReloader
+INFO 2025-08-28 08:08:00,177 autoreload 16356 16116 C:\Users\ASUS\Documents\agent\backend\inventory\models.py changed, reloading.
+INFO 2025-08-28 08:08:01,669 autoreload 7292 8404 Watching for file changes with StatReloader
+INFO 2025-08-28 08:14:50,485 autoreload 7292 8404 C:\Users\ASUS\Documents\agent\backend\backend\settings.py changed, reloading.
+INFO 2025-08-28 08:14:51,566 autoreload 5456 6948 Watching for file changes with StatReloader
+INFO 2025-08-28 08:18:43,330 basehttp 5456 2696 "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-08-28 08:18:43,457 basehttp 5456 2696 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4251
+INFO 2025-08-28 08:22:21,067 basehttp 5456 11056 "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-08-28 08:22:21,086 basehttp 5456 11056 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4251
+WARNING 2025-08-28 08:22:33,609 log 5456 15532 Bad Request: /graphql/
+WARNING 2025-08-28 08:22:33,610 basehttp 5456 15532 "POST /graphql/ HTTP/1.1" 400 1496
+INFO 2025-08-28 08:30:12,045 basehttp 5456 4592 "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-08-28 08:30:12,064 basehttp 5456 4592 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4251
+INFO 2025-08-28 08:30:42,900 autoreload 5456 6948 C:\Users\ASUS\Documents\agent\backend\inventory\admin.py changed, reloading.
+INFO 2025-08-28 08:30:43,983 autoreload 14388 10372 Watching for file changes with StatReloader
+INFO 2025-08-28 08:32:43,697 basehttp 14388 12340 "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-08-28 08:32:43,720 basehttp 14388 12340 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4251
+WARNING 2025-08-28 08:32:56,442 log 14388 1844 Bad Request: /graphql/
+WARNING 2025-08-28 08:32:56,443 basehttp 14388 1844 "POST /graphql/ HTTP/1.1" 400 1496
+INFO 2025-08-28 08:46:04,649 autoreload 14388 10372 C:\Users\ASUS\Documents\agent\backend\inventory\urls.py changed, reloading.
+INFO 2025-08-28 08:46:05,759 autoreload 7724 3000 Watching for file changes with StatReloader
+INFO 2025-08-28 08:48:50,207 basehttp 7724 6680 "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-08-28 08:48:50,239 basehttp 7724 6680 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4251
+WARNING 2025-08-28 08:49:03,137 log 7724 3980 Bad Request: /graphql/
+WARNING 2025-08-28 08:49:03,137 basehttp 7724 3980 "POST /graphql/ HTTP/1.1" 400 1496
+INFO 2025-08-28 08:49:58,803 basehttp 7724 9472 "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-08-28 08:49:58,814 basehttp 7724 9472 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4251
+INFO 2025-08-28 08:50:11,065 basehttp 7724 12000 "POST /graphql/ HTTP/1.1" 200 215
+WARNING 2025-08-28 08:50:13,099 log 7724 9676 Bad Request: /graphql/
+WARNING 2025-08-28 08:50:13,100 basehttp 7724 9676 "POST /graphql/ HTTP/1.1" 400 170
+WARNING 2025-08-28 08:50:15,133 log 7724 6896 Bad Request: /graphql/
+WARNING 2025-08-28 08:50:15,134 basehttp 7724 6896 "POST /graphql/ HTTP/1.1" 400 170
+WARNING 2025-08-28 08:50:17,182 log 7724 13576 Bad Request: /graphql/
+WARNING 2025-08-28 08:50:17,183 basehttp 7724 13576 "POST /graphql/ HTTP/1.1" 400 170
+WARNING 2025-08-28 08:50:19,213 log 7724 11384 Bad Request: /graphql/
+WARNING 2025-08-28 08:50:19,213 basehttp 7724 11384 "POST /graphql/ HTTP/1.1" 400 170
+WARNING 2025-08-28 08:50:21,251 log 7724 7780 Bad Request: /graphql/
+WARNING 2025-08-28 08:50:21,251 basehttp 7724 7780 "POST /graphql/ HTTP/1.1" 400 170
+WARNING 2025-08-28 08:50:23,318 log 7724 16288 Bad Request: /graphql/
+WARNING 2025-08-28 08:50:23,319 basehttp 7724 16288 "POST /graphql/ HTTP/1.1" 400 170
+WARNING 2025-08-28 08:50:25,336 log 7724 1692 Bad Request: /graphql/
+WARNING 2025-08-28 08:50:25,337 basehttp 7724 1692 "POST /graphql/ HTTP/1.1" 400 170
+WARNING 2025-08-28 08:50:27,383 log 7724 13064 Bad Request: /graphql/
+WARNING 2025-08-28 08:50:27,384 basehttp 7724 13064 "POST /graphql/ HTTP/1.1" 400 170
+WARNING 2025-08-28 08:50:29,415 log 7724 13688 Bad Request: /graphql/
+WARNING 2025-08-28 08:50:29,415 basehttp 7724 13688 "POST /graphql/ HTTP/1.1" 400 170
+WARNING 2025-08-28 08:50:31,457 log 7724 7008 Bad Request: /graphql/
+WARNING 2025-08-28 08:50:31,458 basehttp 7724 7008 "POST /graphql/ HTTP/1.1" 400 170
+INFO 2025-08-28 08:50:33,503 basehttp 7724 8828 "POST /graphql/ HTTP/1.1" 200 242
