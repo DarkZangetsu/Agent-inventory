@@ -81,6 +81,9 @@ class Software(models.Model):
     version = models.CharField(max_length=100, verbose_name="Version")
     publisher = models.CharField(max_length=255, verbose_name="Éditeur")
     install_date = models.CharField(max_length=50, verbose_name="Date d'installation")
+    install_location = models.CharField(max_length=512, blank=True, default="", verbose_name="Emplacement d'installation")
+    uninstall_string = models.TextField(blank=True, default="", verbose_name="Commande de désinstallation")
+    source = models.CharField(max_length=50, blank=True, default="", verbose_name="Source")
     detection_date = models.DateTimeField(default=timezone.now, verbose_name="Date de détection")
     
     # Métadonnées
@@ -107,6 +110,9 @@ class Software(models.Model):
             defaults={
                 'publisher': software_data.get('publisher', 'Unknown'),
                 'install_date': software_data.get('install_date', 'Unknown'),
+                'install_location': software_data.get('install_location', '')[:512],
+                'uninstall_string': software_data.get('uninstall_string', ''),
+                'source': software_data.get('source', '')[:50],
                 'detection_date': timezone.now(),
             }
         )
@@ -115,6 +121,9 @@ class Software(models.Model):
             # Mettre à jour les informations existantes
             software.publisher = software_data.get('publisher', 'Unknown')
             software.install_date = software_data.get('install_date', 'Unknown')
+            software.install_location = (software_data.get('install_location', '') or '')[:512]
+            software.uninstall_string = software_data.get('uninstall_string', '') or ''
+            software.source = (software_data.get('source', '') or '')[:50]
             software.detection_date = timezone.now()
             software.save()
         

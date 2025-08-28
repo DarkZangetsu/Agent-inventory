@@ -115,7 +115,33 @@ class InventoryAgent:
         """Synchronise les données avec le serveur"""
         try:
             self.logger.info("Synchronisation des données avec le serveur...")
-            
+            # Détection de changements: si aucune modification détectée, ignorer l'envoi
+            try:
+                if self.last_computer_data is not None:
+                    def _dump_min(obj: Any) -> str:
+                        return json.dumps(obj or {}, ensure_ascii=False, separators=(",", ":"))
+
+                    # Comparaison système/matériel/réseau
+                    same_system = _dump_min(inventory_data.get('system_info')) == _dump_min(self.last_computer_data.get('system_info'))
+                    same_hw = _dump_min(inventory_data.get('hardware_info')) == _dump_min(self.last_computer_data.get('hardware_info'))
+                    same_net = _dump_min(inventory_data.get('network_info')) == _dump_min(self.last_computer_data.get('network_info'))
+
+                    # Comparaison logiciels (par nom+version)
+                    def _soft_set(data: Dict[str, Any]) -> set:
+                        items = data.get('software_info', {}).get('installed_software', []) if 'software_info' in data else data.get('installed_software', [])
+                        return set(
+                            (str((s or {}).get('name', '')).strip(), str((s or {}).get('version', 'Unknown')).strip())
+                            for s in items if (s or {}).get('name')
+                        )
+
+                    same_sw = _soft_set(inventory_data) == _soft_set(self.last_computer_data)
+
+                    if same_system and same_hw and same_net and same_sw:
+                        self.logger.info("Aucun changement détecté, synchronisation ignorée")
+                        return True
+            except Exception as e:
+                self.logger.warning(f"Ignoré: erreur lors de la détection des changements: {str(e)}")
+
             computer_data = self.prepare_computer_data(inventory_data)
             
             if not self.api_client.sync_computer_data(computer_data):
@@ -134,6 +160,9 @@ class InventoryAgent:
                     return False
             
             self.logger.info("Synchronisation des données terminée avec succès")
+            # Mettre à jour les caches après succès
+            self.last_computer_data = inventory_data
+            self.last_software_data = inventory_data.get('software_info', {})
             return True
             
         except Exception as e:

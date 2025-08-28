@@ -51,6 +51,21 @@ class SoftwareInput(graphene.InputObjectType):
     version = graphene.String()
     publisher = graphene.String()
     installDate = graphene.String()
+    installLocation = graphene.String()
+    uninstallString = graphene.String()
+    source = graphene.String()
+    detectionDate = graphene.DateTime()
+
+
+class SoftwareItemInput(graphene.InputObjectType):
+    """Input GraphQL pour un élément logiciel (sans computerId)"""
+    name = graphene.String(required=True)
+    version = graphene.String()
+    publisher = graphene.String()
+    installDate = graphene.String()
+    installLocation = graphene.String()
+    uninstallString = graphene.String()
+    source = graphene.String()
     detectionDate = graphene.DateTime()
 
 
@@ -180,6 +195,9 @@ class CreateSoftwareMutation(graphene.Mutation):
                 'version': input.version or 'Unknown',
                 'publisher': input.publisher or 'Unknown',
                 'install_date': input.installDate or 'Unknown',
+                'install_location': input.installLocation or '',
+                'uninstall_string': input.uninstallString or '',
+                'source': input.source or '',
                 'detection_date': input.detectionDate or timezone.now()
             })
             
@@ -224,6 +242,9 @@ class UpdateSoftwareMutation(graphene.Mutation):
             software.version = input.version or software.version
             software.publisher = input.publisher or software.publisher
             software.install_date = input.installDate or software.install_date
+            software.install_location = input.installLocation or software.install_location
+            software.uninstall_string = input.uninstallString or software.uninstall_string
+            software.source = input.source or software.source
             software.detection_date = input.detectionDate or timezone.now()
             software.save()
             
@@ -245,6 +266,55 @@ class UpdateSoftwareMutation(graphene.Mutation):
                 success=False,
                 errors=[str(e)]
             )
+
+
+class BulkCreateSoftwareMutation(graphene.Mutation):
+    """Mutation pour créer/mettre à jour plusieurs logiciels à la fois"""
+    class Arguments:
+        computer_id = graphene.Int(required=True)
+        items = graphene.List(SoftwareItemInput, required=True)
+
+    created = graphene.Int()
+    updated = graphene.Int()
+    success = graphene.Boolean()
+    errors = graphene.List(graphene.String)
+
+    def mutate(self, info, computer_id, items):
+        try:
+            computer = Computer.objects.get(id=computer_id)
+        except Computer.DoesNotExist:
+            return BulkCreateSoftwareMutation(created=0, updated=0, success=False, errors=["Ordinateur non trouvé"]) 
+
+        created_count = 0
+        updated_count = 0
+        errors = []
+
+        for it in items:
+            try:
+                data = {
+                    'name': (it.name or 'Unknown')[:255],
+                    'version': (it.version or 'Unknown')[:100],
+                    'publisher': (it.publisher or 'Unknown')[:255],
+                    'install_date': it.installDate or 'Unknown',
+                    'install_location': (it.installLocation or '')[:512],
+                    'uninstall_string': it.uninstallString or '',
+                    'source': (it.source or '')[:50],
+                    'detection_date': it.detectionDate or timezone.now(),
+                }
+                _, created = Software.get_or_create_software(computer, data)
+                if created:
+                    created_count += 1
+                else:
+                    updated_count += 1
+            except Exception as e:
+                errors.append(str(e))
+
+        return BulkCreateSoftwareMutation(
+            created=created_count,
+            updated=updated_count,
+            success=(len(errors) == 0),
+            errors=errors
+        )
 
 
 class Query(graphene.ObjectType):
@@ -296,6 +366,7 @@ class Mutation(graphene.ObjectType):
     update_computer = UpdateComputerMutation.Field()
     create_software = CreateSoftwareMutation.Field()
     update_software = UpdateSoftwareMutation.Field()
+    bulk_create_software = BulkCreateSoftwareMutation.Field()
 
 
 # Créer le schéma

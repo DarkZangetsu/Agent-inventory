@@ -16,6 +16,36 @@ sys.path.insert(0, str(Path(__file__).parent / 'inventory_agent' / 'src'))
 DJANGO_SERVER_URL = "http://localhost:8000"
 GRAPHQL_ENDPOINT = f"{DJANGO_SERVER_URL}/graphql/"
 
+def get_computer_by_serial(serial_number):
+    """Récupère un ordinateur par S/N via GraphQL (retourne dict ou None)"""
+    query = """
+    query($serial: String){
+        computerBySerial(serialNumber: $serial){
+            id
+            hostname
+            serialNumber
+            manufacturer
+            model
+            currentUser
+            systemInfo
+            hardwareInfo
+            networkInfo
+            lastSeen
+        }
+    }
+    """
+    payload = {
+        'query': query,
+        'variables': { 'serial': serial_number }
+    }
+    try:
+        response = requests.post(GRAPHQL_ENDPOINT, json=payload, headers={'Content-Type': 'application/json'}, timeout=15)
+        response.raise_for_status()
+        data = response.json().get('data', {})
+        return data.get('computerBySerial')
+    except Exception:
+        return None
+
 def test_backend_connection():
     """Test de connexion au serveur Django"""
     print("=== Test de connexion au serveur Django ===")
@@ -52,60 +82,91 @@ def send_computer_data_to_django(computer_data):
         'networkInfo': json.dumps(computer_data['network_info'])
     }
     
-    # Mutation GraphQL pour créer/mettre à jour l'ordinateur
-    mutation = """
+    # Mutation de création
+    create_mutation = """
     mutation CreateComputer($input: ComputerInput!) {
         createComputer(input: $input) {
-            computer {
-                id
-                hostname
-                serialNumber
-                manufacturer
-                model
-            }
+            computer { id hostname serialNumber }
+            success
+            errors
+        }
+    }
+    """
+
+    # Mutation de mise à jour
+    update_mutation = """
+    mutation UpdateComputer($id: ID!, $input: ComputerInput!) {
+        updateComputer(id: $id, input: $input) {
+            computer { id hostname serialNumber }
             success
             errors
         }
     }
     """
     
-    payload = {
-        'query': mutation,
-        'variables': {
-            'input': graphql_data
-        }
-    }
-    
+    # 1) Tenter la création, sinon upsert avec mise à jour
     try:
-        response = requests.post(
-            GRAPHQL_ENDPOINT,
-            json=payload,
-            headers={'Content-Type': 'application/json'},
-            timeout=30
+        create_payload = {'query': create_mutation, 'variables': {'input': graphql_data}}
+        resp = requests.post(GRAPHQL_ENDPOINT, json=create_payload, headers={'Content-Type': 'application/json'}, timeout=30)
+        if resp.status_code == 200:
+            result = resp.json()
+            if result.get('data', {}).get('createComputer', {}).get('success'):
+                comp = result['data']['createComputer']['computer']
+                print("✅ Ordinateur créé")
+                print(f"   ID: {comp['id']}  S/N: {comp['serialNumber']}")
+                return comp['id']
+            # Si échec (ex: UNIQUE), on tente l'update
+        else:
+            print(f"❌ Erreur HTTP: {resp.status_code}")
+            print(f"   Réponse: {resp.text}")
+    except Exception as e:
+        print(f"⚠️ Échec création directe: {e}")
+
+    # 2) Récupérer l'ordinateur par S/N et mettre à jour
+    existing = get_computer_by_serial(computer_data['system_info']['serial_number'])
+    if not existing:
+        print("❌ Impossible de récupérer l'ordinateur existant pour mise à jour")
+        return None
+
+    # Vérifier si des changements existent, sinon ignorer
+    try:
+        same_core = (
+            existing.get('hostname') == graphql_data['hostname'] and
+            existing.get('manufacturer') == graphql_data['manufacturer'] and
+            existing.get('model') == graphql_data['model'] and
+            existing.get('currentUser') == graphql_data['currentUser']
         )
-        
-        if response.status_code == 200:
-            result = response.json()
-            if 'errors' in result:
-                print(f"❌ Erreurs GraphQL: {result['errors']}")
-                return None
-            elif 'data' in result and result['data']['createComputer']['success']:
-                computer = result['data']['createComputer']['computer']
-                print(f"✅ Ordinateur créé/mis à jour avec succès")
-                print(f"   ID: {computer['id']}")
-                print(f"   Hostname: {computer['hostname']}")
-                print(f"   S/N: {computer['serialNumber']}")
-                return computer['id']
+        # existing.*Info sont des TextField (JSON string). On compare aux JSON dump envoyés
+        same_json = (
+            (existing.get('systemInfo') or '') == graphql_data['systemInfo'] and
+            (existing.get('hardwareInfo') or '') == graphql_data['hardwareInfo'] and
+            (existing.get('networkInfo') or '') == graphql_data['networkInfo']
+        )
+        if same_core and same_json:
+            print("ℹ️ Aucun changement détecté sur l'ordinateur, mise à jour ignorée")
+            return existing['id']
+    except Exception:
+        pass
+
+    try:
+        update_payload = {'query': update_mutation, 'variables': {'id': existing['id'], 'input': graphql_data}}
+        resp = requests.post(GRAPHQL_ENDPOINT, json=update_payload, headers={'Content-Type': 'application/json'}, timeout=30)
+        if resp.status_code == 200:
+            result = resp.json()
+            if result.get('data', {}).get('updateComputer', {}).get('success'):
+                comp = result['data']['updateComputer']['computer']
+                print("✅ Ordinateur mis à jour")
+                print(f"   ID: {comp['id']}  S/N: {comp['serialNumber']}")
+                return comp['id']
             else:
-                print(f"❌ Échec de la création: {result}")
+                print(f"❌ Échec de la mise à jour: {result}")
                 return None
         else:
-            print(f"❌ Erreur HTTP: {response.status_code}")
-            print(f"   Réponse: {response.text}")
+            print(f"❌ Erreur HTTP update: {resp.status_code}")
+            print(f"   Réponse: {resp.text}")
             return None
-            
     except Exception as e:
-        print(f"❌ Erreur lors de l'envoi: {e}")
+        print(f"❌ Erreur lors de la mise à jour: {e}")
         return None
 
 def send_software_data_to_django(computer_id, software_data):
@@ -115,65 +176,64 @@ def send_software_data_to_django(computer_id, software_data):
     if not software_data.get('installed_software'):
         print("   Aucun logiciel à envoyer")
         return
-    
-    # Mutation GraphQL pour créer les logiciels
+
+    # Mutation GraphQL pour bulk upsert
     mutation = """
-    mutation CreateSoftware($input: SoftwareInput!) {
-        createSoftware(input: $input) {
-            software {
-                id
-                name
-                version
-                publisher
-            }
+    mutation BulkCreateSoftware($computerId: Int!, $items: [SoftwareItemInput!]!) {
+        bulkCreateSoftware(computerId: $computerId, items: $items) {
+            created
+            updated
             success
             errors
         }
     }
     """
-    
-    success_count = 0
-    error_count = 0
-    
-    for software in software_data['installed_software'][:10]:  # Limiter à 10 logiciels pour le test
-        software_input = {
-            'computerId': computer_id,
-            'name': software.get('name', 'Unknown'),
-            'version': software.get('version', 'Unknown'),
-            'publisher': software.get('publisher', 'Unknown'),
-            'installDate': software.get('install_date', 'Unknown')
-        }
-        
+
+    # Préparer la liste normalisée
+    items = []
+    for software in software_data['installed_software']:
+        name = (software.get('name') or '').strip()
+        if not name:
+            continue
+        items.append({
+            'name': name[:255],
+            'version': (software.get('version') or 'Unknown')[:100],
+            'publisher': (software.get('publisher') or 'Unknown')[:255],
+            'installDate': (software.get('install_date') or 'Unknown')
+        })
+
+    if not items:
+        print("   Aucun logiciel valide à envoyer")
+        return
+
+    try:
         payload = {
             'query': mutation,
             'variables': {
-                'input': software_input
+                'computerId': int(computer_id),
+                'items': items
             }
         }
-        
-        try:
-            response = requests.post(
-                GRAPHQL_ENDPOINT,
-                json=payload,
-                headers={'Content-Type': 'application/json'},
-                timeout=10
-            )
-            
-            if response.status_code == 200:
-                result = response.json()
-                if 'errors' in result:
-                    error_count += 1
-                elif 'data' in result and result['data']['createSoftware']['success']:
-                    success_count += 1
-                else:
-                    error_count += 1
+        response = requests.post(
+            GRAPHQL_ENDPOINT,
+            json=payload,
+            headers={'Content-Type': 'application/json'},
+            timeout=60
+        )
+        if response.status_code == 200:
+            result = response.json()
+            if 'data' in result and result['data'].get('bulkCreateSoftware'):
+                res = result['data']['bulkCreateSoftware']
+                print(f"✅ Logiciels envoyés: {res.get('created',0)} créés, {res.get('updated',0)} mis à jour")
+                if res.get('errors'):
+                    print(f"   ⚠️ Erreurs: {res['errors']}")
             else:
-                error_count += 1
-                
-        except Exception:
-            error_count += 1
-    
-    print(f"✅ Logiciels envoyés: {success_count} succès, {error_count} erreurs")
+                print(f"❌ Réponse inattendue: {result}")
+        else:
+            print(f"❌ Erreur HTTP: {response.status_code}")
+            print(f"   Réponse: {response.text}")
+    except Exception as e:
+        print(f"❌ Erreur lors de l'envoi bulk: {e}")
 
 def test_full_inventory_with_backend():
     """Test complet avec envoi au serveur Django"""

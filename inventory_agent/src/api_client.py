@@ -113,6 +113,17 @@ class GraphQLClient:
                     }
                 }
             """
+            ,
+            'bulk_create_software': """
+                mutation BulkCreateSoftware($computerId: Int!, $items: [SoftwareItemInput!]!) {
+                    bulkCreateSoftware(computerId: $computerId, items: $items) {
+                        created
+                        updated
+                        success
+                        errors
+                    }
+                }
+            """
         }
     
     def execute_query(self, query_name: str, variables: Dict[str, Any] = None) -> Optional[Dict[str, Any]]:
@@ -219,6 +230,27 @@ class GraphQLClient:
             existing_computer = self.get_computer(serial_number)
             
             if existing_computer:
+                # Détection de changements: si aucun changement, ignorer la MAJ
+                try:
+                    def _to_str(value):
+                        if isinstance(value, dict):
+                            return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+                        return value or ""
+
+                    same = (
+                        (existing_computer.get('hostname') or '') == (computer_data.get('hostname') or '') and
+                        (existing_computer.get('manufacturer') or '') == (computer_data.get('manufacturer') or '') and
+                        (existing_computer.get('model') or '') == (computer_data.get('model') or '') and
+                        (existing_computer.get('currentUser') or '') == (computer_data.get('currentUser') or '') and
+                        _to_str(existing_computer.get('systemInfo')) == (computer_data.get('systemInfo') or '') and
+                        _to_str(existing_computer.get('hardwareInfo')) == (computer_data.get('hardwareInfo') or '') and
+                        _to_str(existing_computer.get('networkInfo')) == (computer_data.get('networkInfo') or '')
+                    )
+                    if same:
+                        logging.info(f"Aucun changement détecté pour {serial_number}, mise à jour ignorée")
+                        return True
+                except Exception:
+                    pass
                 # Mettre à jour l'ordinateur existant
                 result = self.update_computer(existing_computer['id'], computer_data)
                 if result:
@@ -244,33 +276,38 @@ class GraphQLClient:
     def sync_software_data(self, computer_id: str, software_list: list) -> bool:
         """Synchronise les données des logiciels d'un ordinateur"""
         try:
-            # Récupérer les logiciels existants
-            existing_software = self.get_computer_software(computer_id)
-            existing_software_dict = {}
-            
-            if existing_software:
-                for software in existing_software:
-                    key = f"{software['name']}_{software['version']}"
-                    existing_software_dict[key] = software
-            
-            # Traiter chaque logiciel
-            for software_data in software_list:
-                software_data['computerId'] = computer_id
-                key = f"{software_data['name']}_{software_data['version']}"
-                
-                if key in existing_software_dict:
-                    # Mettre à jour le logiciel existant
-                    existing_id = existing_software_dict[key]['id']
-                    result = self.update_software(existing_id, software_data)
-                    if not result:
-                        logging.warning(f"Échec de la mise à jour du logiciel {software_data['name']}")
+            # Préparer les items normalisés
+            items = []
+            for sw in software_list:
+                name = (sw.get('name') or '').strip()
+                if not name:
+                    continue
+                item = {
+                    'name': name[:255],
+                    'version': (sw.get('version') or 'Unknown')[:100],
+                    'publisher': (sw.get('publisher') or 'Unknown')[:255],
+                    'installDate': (sw.get('install_date') or 'Unknown'),
+                    'installLocation': (sw.get('install_location') or '')[:512],
+                    'uninstallString': (sw.get('uninstall_string') or ''),
+                    'source': (sw.get('source') or '')[:50]
+                }
+                items.append(item)
+
+            if not items:
+                return True
+
+            variables = {'computerId': int(computer_id), 'items': items}
+            result = self.execute_query('bulk_create_software', variables)
+            if result and 'bulkCreateSoftware' in result:
+                payload = result['bulkCreateSoftware']
+                if not payload.get('success'):
+                    logging.warning(f"Bulk software errors: {payload.get('errors')}")
                 else:
-                    # Créer un nouveau logiciel
-                    result = self.create_software(software_data)
-                    if not result:
-                        logging.warning(f"Échec de la création du logiciel {software_data['name']}")
-            
-            return True
+                    logging.info(f"Logiciels: {payload.get('created')} créés, {payload.get('updated')} mis à jour")
+                return True
+            else:
+                logging.error("Réponse inattendue pour bulkCreateSoftware")
+                return False
             
         except Exception as e:
             logging.error(f"Erreur lors de la synchronisation des logiciels: {str(e)}")
