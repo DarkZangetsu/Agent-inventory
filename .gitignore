@@ -20,3 +20,9 @@ db.sqlite3
 .idea/
 
 logs/
+
+build/
+
+env311/
+
+dist/

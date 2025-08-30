@@ -8,6 +8,7 @@ import wmi
 from typing import Dict, Any, List
 from datetime import datetime
 import re
+import logging
 
 
 class SoftwareInfoCollector:
@@ -19,68 +20,66 @@ class SoftwareInfoCollector:
     def get_installed_software_from_registry(self) -> List[Dict[str, Any]]:
         """Récupère les logiciels installés depuis le registre Windows"""
         software_list = []
-        
-        # Clés de registre pour les logiciels installés
-        registry_keys = [
-            (winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"),
-            (winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"),
-            (winreg.HKEY_CURRENT_USER, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall")
-        ]
-        
-        for hkey, subkey in registry_keys:
+
+        def _read_uninstall(hkey_root, subkey_path, user_sid=None):
             try:
-                with winreg.OpenKey(hkey, subkey) as key:
+                with winreg.OpenKey(hkey_root, subkey_path) as key:
                     for i in range(winreg.QueryInfoKey(key)[0]):
                         try:
                             subkey_name = winreg.EnumKey(key, i)
                             with winreg.OpenKey(key, subkey_name) as subkey_handle:
-                                software_info = {}
-                                
-                                # Récupérer les informations du logiciel
                                 try:
-                                    software_info['name'] = winreg.QueryValueEx(subkey_handle, "DisplayName")[0]
-                                except:
+                                    display_name = winreg.QueryValueEx(subkey_handle, "DisplayName")[0]
+                                except Exception:
                                     continue
-                                
-                                try:
-                                    software_info['version'] = winreg.QueryValueEx(subkey_handle, "DisplayVersion")[0]
-                                except:
-                                    software_info['version'] = "Unknown"
-                                
-                                try:
-                                    software_info['publisher'] = winreg.QueryValueEx(subkey_handle, "Publisher")[0]
-                                except:
-                                    software_info['publisher'] = "Unknown"
-                                
-                                try:
-                                    software_info['install_location'] = winreg.QueryValueEx(subkey_handle, "InstallLocation")[0]
-                                except:
-                                    software_info['install_location'] = "Unknown"
-                                
-                                try:
-                                    install_date = winreg.QueryValueEx(subkey_handle, "InstallDate")[0]
-                                    if install_date:
-                                        software_info['install_date'] = install_date
-                                    else:
-                                        software_info['install_date'] = "Unknown"
-                                except:
-                                    software_info['install_date'] = "Unknown"
-                                
-                                try:
-                                    software_info['uninstall_string'] = winreg.QueryValueEx(subkey_handle, "UninstallString")[0]
-                                except:
-                                    software_info['uninstall_string'] = "Unknown"
-                                
-                                software_info['detection_date'] = datetime.now().isoformat()
-                                software_info['source'] = 'registry'
-                                
+
+                                def _q(name, default=None):
+                                    try:
+                                        return winreg.QueryValueEx(subkey_handle, name)[0]
+                                    except Exception:
+                                        return default
+
+                                software_info = {
+                                    'name': display_name,
+                                    'version': _q('DisplayVersion', 'Unknown'),
+                                    'publisher': _q('Publisher', 'Unknown'),
+                                    'install_location': _q('InstallLocation', 'Unknown'),
+                                    'install_date': _q('InstallDate', 'Unknown') or 'Unknown',
+                                    'uninstall_string': _q('UninstallString', 'Unknown'),
+                                    'detection_date': datetime.now().isoformat(),
+                                    'source': 'registry' if not user_sid else f'registry:{user_sid}'
+                                }
                                 software_list.append(software_info)
-                                
-                        except Exception as e:
+                        except Exception:
                             continue
-            except Exception as e:
-                continue
-        
+            except Exception:
+                pass
+
+        # HKLM (machine)
+        _read_uninstall(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall")
+        _read_uninstall(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall")
+
+        # HKCU (session courante) — peut être vide en service
+        _read_uninstall(winreg.HKEY_CURRENT_USER, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall")
+
+        # HKEY_USERS pour chaque profil utilisateur (utile en service)
+        try:
+            with winreg.OpenKey(winreg.HKEY_USERS, "") as users_key:
+                for i in range(winreg.QueryInfoKey(users_key)[0]):
+                    try:
+                        sid = winreg.EnumKey(users_key, i)
+                        # Filtrer des clés systèmes, garder les SIDs utilisateurs
+                        if not re.match(r"^S-1-5-21-", sid):
+                            continue
+                        base = sid + r"\Software\Microsoft\Windows\CurrentVersion\Uninstall"
+                        _read_uninstall(winreg.HKEY_USERS, base, user_sid=sid)
+                        base_wow = sid + r"\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
+                        _read_uninstall(winreg.HKEY_USERS, base_wow, user_sid=sid)
+                    except Exception:
+                        continue
+        except Exception:
+            pass
+
         return software_list
     
     def get_installed_software_from_wmi(self) -> List[Dict[str, Any]]:

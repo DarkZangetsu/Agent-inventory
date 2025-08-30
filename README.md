@@ -9,7 +9,7 @@ Ce projet comprend deux parties principales :
 - Envoie les données via GraphQL à l'API Django
 - Surveille les changements en temps réel
 
-### 2. Serveur Django (`django_server/`)
+### 2. Serveur Django (`backend/`)
 - API GraphQL pour recevoir les données d'inventaire
 - Base de données avec tables Ordinateur et Logiciels
 - Interface d'administration

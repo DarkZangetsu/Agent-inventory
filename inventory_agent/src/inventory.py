@@ -115,6 +115,15 @@ class InventoryAgent:
         """Synchronise les données avec le serveur"""
         try:
             self.logger.info("Synchronisation des données avec le serveur...")
+            # Log de contrôle des tailles et champs clés
+            sysi = inventory_data.get('system_info', {})
+            hwi = inventory_data.get('hardware_info', {})
+            neti = inventory_data.get('network_info', {})
+            soft = inventory_data.get('software_info', {}).get('installed_software', [])
+            self.logger.info(
+                f"Résumé collecte: host={sysi.get('hostname')} sn={sysi.get('serial_number')} "
+                f"software={len(soft)} hw_keys={list(hwi.keys())[:5]} net_keys={list(neti.keys())[:5]}"
+            )
             # Détection de changements: si aucune modification détectée, ignorer l'envoi
             try:
                 if self.last_computer_data is not None:
